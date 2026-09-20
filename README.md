@@ -4,14 +4,18 @@
 ![Linguagens](https://img.shields.io/badge/Linguagens-HTML%20|%20CSS%20|%20JS%20|%20Python-blue)
 ![Banco de Dados](https://img.shields.io/badge/Database-MariaDB-orange)
 
-Projeto acadêmico Full Stack focado no desenvolvimento de um sistema web para gerenciamento de reservas de um resort familiar. O objetivo principal foi criar uma jornada de usuário clara (UI/UX) integrada a um back-end funcional e seguro.
+Projeto acadêmico Full Stack focado no desenvolvimento de um sistema web para gerenciamento de reservas de um resort. O objetivo principal foi criar uma jornada de usuário clara (UI/UX) integrada a um back-end funcional e seguro.
 
 ---
 
 ## 🎥 Demonstração Visual
 
-![Demonstração do Fluxo de Reserva e Login]((https://github.com/user-attachments/assets/0a09811b-7aa9-4896-bf6b-600e2057159c))
 
+https://github.com/user-attachments/assets/ac6d2c51-e622-4c22-ac46-fc26cb92c89b
+
+
+
+Demonstração do Fluxo de Reserva e Login
 ---
 
 ## 💻 Tecnologias Utilizadas
@@ -60,6 +64,7 @@ O terminal confirmará que a API está rodando em http://127.0.0.1:5000.
 3. Acessando a Aplicação
 Com o back-end rodando, basta dar um duplo clique no arquivo index.html localizado na pasta do Front-end (ou abri-lo pelo Live Server do VSCode). O site estará pronto para uso e integrado ao banco!
 
+---
 👨‍💻 Autor
 Alex Vitor Lins da Silva
 Estudante de Análise e Desenvolvimento de Sistemas

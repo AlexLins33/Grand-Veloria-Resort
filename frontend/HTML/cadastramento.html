@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grand Veloria - Cadastro</title>
+    <link rel="stylesheet" href="../CSS/style.css">
+    <link rel="stylesheet" href="../CSS/login.css">
+</head>
+<body class="body-login">
+
+    <header class="header-login">
+        <a href="index.html" class="logo-login">
+            <svg width="30" height="30" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="50" cy="35" r="18" fill="var(--cor-secundaria)" />
+                <path d="M 10 65 Q 30 45 50 65 T 90 65" fill="none" stroke="var(--cor-primaria)" stroke-width="8" stroke-linecap="round"/>
+                <path d="M 10 85 Q 30 65 50 85 T 90 85" fill="none" stroke="var(--cor-primaria)" stroke-width="8" stroke-linecap="round"/>
+            </svg>
+            <h2>GRAND VELORIA</h2>
+        </a>
+    </header>
+
+    <main class="container-login">
+        <div class="card-login">
+            <h1>Criar Conta</h1>
+            <p>Junte-se ao programa de hóspedes exclusivos</p>
+
+            <form id="form-cadastro" class="form-login">
+                <div class="campo-input">
+                    <label for="nome">Nome Completo</label>
+                    <input type="text" id="nome" placeholder="Seu nome" required>
+                </div>
+
+                <div class="campo-input">
+                    <label for="email">E-mail</label>
+                    <input type="email" id="email" placeholder="seu@email.com" required>
+                </div>
+
+                <div class="campo-input">
+                    <label for="senha">Criar Senha</label>
+                    <input type="password" id="senha" placeholder="Mínimo 6 caracteres" required minlength="6">
+                </div>
+
+                <button type="submit" class="btn-acao-principal">CADASTRAR</button>
+            </form>
+
+            <div class="separador">
+                <span>ou</span>
+            </div>
+            
+            <p class="texto-cadastro">Já tem uma conta? <a href="login.html">Faça Login</a></p>
+        </div>
+    </main>
+
+    <script>
+        document.getElementById('form-cadastro').addEventListener('submit', async (evento) => {
+            // A interceptação do preventDefault é obrigatória para anular o comportamento de redirecionamento síncrono nativo dos formulários HTML
+            evento.preventDefault(); 
+            
+            const nome = document.getElementById('nome').value;
+            const email = document.getElementById('email').value;
+            const senha = document.getElementById('senha').value;
+            
+            const botao = evento.target.querySelector('button');
+            const textoOriginal = botao.textContent;
+            // Bloqueio visual do estado (Loading) mitiga a submissão duplicada de requisições por toques múltiplos
+            botao.textContent = "Criando conta...";
+
+            try {
+                // Fetch operando de forma assíncrona garante que a main thread da UI não seja bloqueada pela latência de rede da API
+                const resposta = await fetch('http://localhost:5000/api/cadastro', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ nome, email, senha })
+                });
+
+                const dados = await resposta.json();
+
+                if (dados.sucesso) {
+                    alert('✅ ' + dados.mensagem);
+                    window.location.href = 'login.html'; 
+                } else {
+                    alert('❌ ' + dados.mensagem);
+                }
+            } catch (erro) {
+                alert('Erro de conexão com o servidor.');
+                console.error(erro);
+            } finally {
+                botao.textContent = textoOriginal; 
+            }
+        });
+    </script>
+    <script src="../js/script.js"></script>
+</body>
+</html>

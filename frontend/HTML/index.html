@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grand Veloria - Home</title>
+    
+    <!-- Importação do CSS modularizado para manter o escopo global separado de estilos de componentes específicos -->
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+    <menu-principal></menu-principal>
+
+    <main>
+        <section class="hero">
+            <!-- Imagem de fundo injetada via CSS para otimizar o tempo de renderização do DOM (LCP) e facilitar a aplicação de gradientes sobrepostos -->
+            <div class="hero-content">
+                <h1>Viva a melhor experiência com sua família</h1>
+                <p>O paraíso perfeito para relaxar e se divertir</p>
+            </div>
+        </section>
+
+        <section class="booking-engine">
+            <!-- method="GET" utilizado aqui para expor os parâmetros de busca na URL, permitindo que a pesquisa mantenha o estado (stateless) ao transitar entre as páginas estáticas -->
+            <form action="#" method="GET" class="booking-form">
+                <div class="form-group">
+                    <label for="checkin">Check-in</label>
+                    <input type="date" id="checkin" name="checkin" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="checkout">Check-out</label>
+                    <input type="date" id="checkout" name="checkout" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="hospedes">Hóspedes</label>
+                    <select id="hospedes" name="hospedes">
+                        <option value="2-2">2 Adultos / 2 Crianças</option>
+                        <option value="2-1">2 Adultos / 1 Criança</option>
+                        <option value="2-0">2 Adultos</option>
+                        <option value="4-0">4 Adultos</option>
+                    </select>
+                </div>
+                
+                <button type="submit" class="btn-buscar">VER DISPONIBILIDADE</button>
+            </form>
+        </section>
+
+        <section id="acomodacoes" class="acomodacoes-section">
+            <h2 class="section-title">Nossas Acomodações</h2>
+            
+            <div class="cards-container">
+                <article class="card">
+                    <img src="..\imagens\suite\principal.jpg" alt="Foto da Suíte Master com vista para o mar" class="card-img">
+                    <div class="card-content">
+                        <h3>Suíte Master</h3>
+                        <p>Até 4 pessoas • Vista para o mar</p>
+                        <a href="..\HTML\suite_master.html" class="btn-secundario">Ver Quarto</a>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <img src="..\imagens\quarto_familia\principal.png" alt="Foto da Suíte Master com vista para o mar" class="card-img">
+                    <div class="card-content">
+                        <h3>Quarto Família</h3>
+                        <p>Até 6 pessoas • Camas conjugadas</p>
+                        <a href="..\HTML\quarto_familia.html" class="btn-secundario">Ver Quarto</a>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <img src="..\imagens\bangalo\principal_bangalo.jpg" alt="Foto do bangalô com vista para o mar" class="card-img">
+                    <div class="card-content">
+                        <h3>Bangalô Premium</h3>
+                        <p>Até 3 pessoas • Piscina privativa</p>
+                        <a href="..\HTML\bangalo_premium.html" class="btn-secundario">Ver Quarto</a>
+                    </div>
+                </article>
+            </div>
+        </section>
+    </main>
+<script src="../js/menu.js"></script>
+</body>
+</html>

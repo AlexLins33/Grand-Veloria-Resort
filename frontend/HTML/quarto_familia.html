@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grand Veloria - Quarto Família</title>
+    <link rel="stylesheet" href="../css/acomodacao.css">
+</head>
+<body>
+
+    <menu-principal></menu-principal>
+
+    <main class="container-acomodacao">
+        
+        <a href="index.html" class="link-voltar">← Voltar para Home</a>
+
+        <section class="galeria-grid">
+            <div class="foto-principal">
+                <img src="..\imagens\quarto_familia\principal.png" alt="Visão geral da Suíte Master com cama King e vista para o mar">
+            </div>
+            
+            <div class="fotos-secundarias">
+                <img src="..\imagens\quarto_familia\copa.png" alt="Quarto conjugado para crianças">
+                <img src="..\imagens\quarto_familia\banheiro.png" alt="Banheiro luxuoso com banheira">
+                <img src="..\imagens\quarto_familia\varanda.jpg" alt="Varanda espaçosa com vista">
+                
+                <div class="foto-com-botao">
+                    <img src="..\imagens\quarto_familia\acolhimento.jpg" alt="Café da manhã na cama">
+                    <button class="btn-ver-todas">Ver todas as fotos</button>
+                </div>
+            </div>
+        </section>
+
+        <div class="conteudo-duplo">
+            <section class="info-acomodacao">
+                <h1 class="titulo-quarto">Quarto Família</h1>
+                <p class="subtitulo">Até 6 pessoas • Camas conjugadas</p>
+                <div class="avaliacao">
+                    <span class="estrelas">★★★★☆</span> <span class="nota-texto">4.8/5 (215 avaliações)</span>
+                </div>
+                
+                <hr class="divisor">
+
+                <h2 class="secao-titulo">Sobre a Acomodação</h2>
+                <p class="descricao">
+                    Pensado sob medida para o bem-estar da sua família, este quarto oferece o conceito de ambientes conjugados. Pais e filhos ficam próximos, mas com a privacidade necessária. Localizado no andar térreo para fácil acesso de carrinhos de bebê, possui isolamento acústico e fica a poucos passos das principais áreas de recreação e do parque aquático infantil.
+                </p>
+
+                <hr class="divisor">
+
+                <h2 class="secao-titulo">Comodidades Principais</h2>
+                <ul class="lista-comodidades">
+                    <li>✓ Ambientes conjugados (porta interna)</li>
+                    <li>✓ Grades de proteção opcionais nas camas</li>
+                    <li>✓ Protetores de tomada já instalados</li>
+                    <li>✓ Smart TV 55" com streaming infantil</li>
+                    <li>✓ Banheiro duplo com banheira segura</li>
+                    <li>✓ Acesso facilitado (Térreo/Sem escadas)</li>
+                </ul>
+            </section>
+
+            <aside class="modulo-reserva">
+                <form action="checkout.html" method="GET" class="form-reserva">
+                    <!-- Inputs hidden injetam metadados via URLSearchParams (método GET), permitindo a transferência de estado entre páginas HTML estáticas sem a necessidade de gerenciar o payload em Storage -->
+                    <input type="hidden" name="quarto" value="Quarto Família">
+                    <input type="hidden" name="preco_diaria" value="600">
+                    
+                    <div class="campos-grupo">
+                        <div class="campo">
+                            <label for="checkin-reserva">Check-in</label>
+                            <input type="date" id="checkin-reserva" name="checkin" value="2026-10-10">
+                        </div>
+                        <div class="campo">
+                            <label for="checkout-reserva">Check-out</label>
+                            <input type="date" id="checkout-reserva" name="checkout" value="2026-10-17">
+                        </div>
+                    </div>
+
+                    <div class="campo-total">
+                        <label for="hospedes-reserva">Hóspedes</label>
+                        <select id="hospedes-reserva" name="hospedes">
+                            <option value="2 Adultos, 2 Crianças">2 Adultos, 2 Crianças</option>
+                            <option value="2 Adultos, 1 Criança">2 Adultos, 1 Criança</option>
+                            <option value="2 Adultos">2 Adultos</option>
+                        </select>
+                    </div>
+
+                    <div class="resumo-preco">
+                        <p>Valor Total (7 diárias)</p>
+                        <h3>R$ 4.200,00</h3>
+                    </div>
+
+                    <button type="submit" class="btn-acao-principal">RESERVAR AGORA</button>
+                    <p class="aviso-seguranca">✓ Cancelamento Grátis até 01/10/2026</p>
+                </form>
+            </aside>
+        </div>
+    </main>
+
+    <script src="../js/menu.js"></script>
+</body>
+</html>

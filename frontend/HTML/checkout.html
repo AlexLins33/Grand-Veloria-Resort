@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grand Veloria - Pagamento Seguro</title>
+    <link rel="stylesheet" href="../CSS/style.css"> 
+    <link rel="stylesheet" href="../CSS/checkout.css">
+</head>
+<body>
+    <menu-principal></menu-principal>
+    
+    <main class="container-checkout">
+        <div class="layout-checkout">
+            
+            <section class="dados-pagamento">
+                <h1>Finalizar Reserva</h1>
+                
+                <form id="form-checkout" action="#" class="form-checkout">
+                    
+                    <!-- DOM Storage: Estrutura de buffer local que recebe e espelha os parâmetros dinâmicos de URLSearchParams para que o script.js consolide a payload final da API -->
+                    <input type="hidden" id="quarto" value="">
+                    <input type="hidden" id="checkin" value="">
+                    <input type="hidden" id="checkout" value="">
+                    <input type="hidden" id="hospedes" value="">
+                    <input type="hidden" id="preco" value="">
+                    
+                    <h2 class="titulo-secao">1. Dados do Hóspede Principal</h2>
+                    <div class="linha-form">
+                        <div class="campo">
+                            <label>Nome Completo</label>
+                            <input type="text" required>
+                        </div>
+                        <div class="campo">
+                            <label>CPF / Passaporte</label>
+                            <input type="text" required>
+                        </div>
+                    </div>
+
+                    <h2 class="titulo-secao">2. Pagamento</h2>
+                    <div class="linha-form">
+                        <div class="campo">
+                            <label>Número do Cartão</label>
+                            <input type="text" placeholder="0000 0000 0000 0000" required>
+                        </div>
+                    </div>
+                    <div class="linha-form">
+                        <div class="campo">
+                            <label>Validade</label>
+                            <input type="text" placeholder="MM/AA" required>
+                        </div>
+                        <div class="campo">
+                            <label>CVV</label>
+                            <input type="text" placeholder="123" required>
+                        </div>
+                    </div>
+                </form>
+            </section>
+
+            <aside class="resumo-reserva">
+                <h2>Resumo da Viagem</h2>
+                <div class="detalhe-resumo">
+                    <p><strong>Acomodação:</strong> <span id="resumo-quarto">Carregando...</span></p>
+                    <p><strong>Check-in:</strong> <span id="resumo-checkin">...</span></p>
+                    <p><strong>Check-out:</strong> <span id="resumo-checkout">...</span></p>
+                    <p><strong>Hóspedes:</strong> <span id="resumo-hospedes">...</span></p>
+                </div>
+                
+                <hr>
+                
+                <div class="total-resumo">
+                    <p>Total a pagar:</p>
+                    <h3 id="resumo-total">R$ 0,00</h3>
+                </div>
+
+                <button type="submit" form="form-checkout" class="btn-acao-principal">CONFIRMAR E PAGAR</button>
+            </aside>
+
+        </div>
+    </main>
+    
+    <script src="../js/menu.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const params = new URLSearchParams(window.location.search);
+            
+            if (params.has('quarto')) {
+                const quarto = params.get('quarto');
+                const checkin = params.get('checkin');
+                const checkout = params.get('checkout');
+                const hospedes = params.get('hospedes');
+                const precoDiaria = parseFloat(params.get('preco_diaria'));
+
+                // O parser de datas com subtração direta de timestamp (milissegundos) previne falhas matemáticas decorrentes de correções de fuso horário local e horário de verão
+                const d1 = new Date(checkin);
+                const d2 = new Date(checkout);
+                const diffTime = Math.abs(d2 - d1);
+                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) || 1; 
+                const precoTotal = diffDays * precoDiaria;
+
+                document.getElementById('quarto').value = quarto;
+                document.getElementById('checkin').value = checkin;
+                document.getElementById('checkout').value = checkout;
+                document.getElementById('hospedes').value = hospedes;
+                document.getElementById('preco').value = precoTotal;
+
+                document.getElementById('resumo-quarto').innerText = quarto;
+                document.getElementById('resumo-checkin').innerText = checkin.split('-').reverse().join('/');
+                document.getElementById('resumo-checkout').innerText = checkout.split('-').reverse().join('/');
+                document.getElementById('resumo-hospedes').innerText = hospedes;
+                document.getElementById('resumo-total').innerText = "R$ " + precoTotal.toLocaleString('pt-BR', {minimumFractionDigits: 2});
+            }
+        });
+    </script>
+
+    <script src="../js/script.js"></script>
+</body>
+</html>

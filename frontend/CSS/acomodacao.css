@@ -1,0 +1,343 @@
+:root {
+    /* Variáveis alocadas na raiz para permitir reuso escalável e facilitar a futura implementação de temas (ex: Dark Mode) */
+    --cor-primaria: #006994;
+    --cor-secundaria: #FF6B35;
+    --cor-secundaria-hover: #E85A28;
+    --cor-fundo: #F9F6F0;
+    --cor-texto: #2C3E50;
+    --cor-branco: #FFFFFF;
+    --cor-cinza-placeholder: #EADDCB;
+}
+
+* {
+    /* Reset universal básico para remover margens nativas dos navegadores (User-Agent Stylesheet) e prevenir inconsistências no box-model */
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: var(--cor-fundo);
+    color: var(--cor-texto);
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 50px;
+    background-color: var(--cor-branco);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+}
+
+.logo h2 {
+    color: var(--cor-primaria);
+    font-size: 24px;
+}
+
+.nav-menu ul {
+    list-style: none;
+    display: flex;
+    gap: 30px;
+}
+
+.nav-menu a {
+    text-decoration: none;
+    color: var(--cor-texto);
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.nav-menu a:hover {
+    color: var(--cor-primaria);
+}
+
+.btn-reservar-header {
+    background-color: var(--cor-secundaria);
+    color: var(--cor-branco);
+    padding: 10px 24px;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 6px;
+    transition: background 0.3s, transform 0.2s;
+}
+
+.btn-reservar-header:hover {
+    background-color: var(--cor-secundaria-hover);
+    transform: translateY(-2px);
+}
+
+.container-acomodacao {
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 0 20px;
+}
+
+.link-voltar {
+    display: inline-block;
+    margin-bottom: 20px;
+    text-decoration: none;
+    color: var(--cor-primaria);
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+.link-voltar:hover { 
+    color: var(--cor-secundaria); 
+}
+
+.galeria-grid {
+    display: flex;
+    gap: 12px;
+    /* Altura fixada em 480px para mitigar o Cumulative Layout Shift (CLS) enquanto as imagens carregam */
+    height: 480px; 
+    margin-bottom: 40px;
+    border-radius: 16px;
+    /* overflow: hidden força o corte de elementos filhos (imagens) que ultrapassem os cantos arredondados do contêiner pai */
+    overflow: hidden; 
+}
+
+.foto-principal {
+    flex: 1; 
+}
+
+.foto-principal img {
+    width: 100%;
+    height: 100%;
+    /* object-fit: cover garante o preenchimento do contêiner sem alterar o aspect-ratio (proporção) original da imagem */
+    object-fit: cover; 
+    transition: transform 0.5s ease;
+}
+
+.foto-principal:hover img {
+    transform: scale(1.03); 
+}
+
+.fotos-secundarias {
+    flex: 1; 
+    display: grid;
+    grid-template-columns: 1fr 1fr; 
+    grid-template-rows: 1fr 1fr;    
+    gap: 12px;
+}
+
+.fotos-secundarias img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.foto-com-botao {
+    /* Define um novo contexto de empilhamento (stacking context) para permitir o posicionamento absoluto do botão em relação a esta div específica */
+    position: relative; 
+}
+
+.btn-ver-todas {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    background-color: var(--cor-branco);
+    color: var(--cor-texto);
+    border: 1px solid var(--cor-texto);
+    padding: 10px 20px;
+    font-weight: bold;
+    border-radius: 6px;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    transition: background 0.3s;
+}
+
+.btn-ver-todas:hover {
+    background-color: var(--cor-fundo);
+}
+
+@media (max-width: 768px) {
+    .galeria-grid {
+        flex-direction: column;
+        height: auto;
+    }
+    
+    .foto-principal {
+        height: 300px;
+    }
+    
+    .fotos-secundarias {
+        /* Ocultado em viewports menores para reduzir o excesso de rolagem e priorizar o carregamento (LCP) da foto principal */
+        display: none; 
+    }
+}
+
+.conteudo-duplo {
+    display: flex;
+    gap: 40px;
+    /* align-items: flex-start impede que os filhos adotem o comportamento padrão 'stretch' do Flexbox, o que quebraria a propriedade position: sticky da coluna lateral */
+    align-items: flex-start; 
+}
+
+.info-acomodacao {
+    flex: 7;
+    background-color: var(--cor-branco);
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+}
+
+.titulo-quarto { 
+    color: var(--cor-primaria);
+    font-size: 2.2rem;
+    margin-bottom: 5px; 
+}
+
+.subtitulo { 
+    color: var(--cor-texto); 
+    font-size: 1.1rem;
+    margin-bottom: 15px; 
+    opacity: 0.8;
+}
+
+.avaliacao { margin-bottom: 20px; }
+.estrelas { color: #F1C40F; font-size: 1.2rem; }
+.nota-texto { color: var(--cor-texto); font-size: 0.9rem; margin-left: 5px; opacity: 0.8; }
+
+.divisor {
+    border: 0;
+    border-top: 1px solid #D1D8DD;
+    margin: 30px 0;
+}
+
+.secao-titulo {
+    color: var(--cor-primaria);
+    margin-bottom: 15px;
+    font-size: 1.4rem;
+}
+
+.descricao {
+    line-height: 1.7;
+    color: var(--cor-texto);
+    font-size: 1.05rem;
+    opacity: 0.9;
+}
+
+.lista-comodidades {
+    display: grid;
+    grid-template-columns: 1fr 1fr; 
+    gap: 15px;
+    list-style: none;
+}
+
+.lista-comodidades li {
+    color: var(--cor-texto);
+    font-size: 1.05rem;
+    opacity: 0.9;
+}
+
+.modulo-reserva {
+    flex: 3;
+    background-color: var(--cor-branco);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1); 
+    /* Fixa o módulo de conversão na tela durante o scroll do usuário para maximizar o Call-To-Action (CTA) */
+    position: sticky;
+    top: 20px; 
+    border-top: 4px solid var(--cor-primaria);
+}
+
+.form-reserva {
+    display: flex;
+    flex-direction: column;
+}
+
+.campos-grupo {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.campo, .campo-total {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.campo label, .campo-total label {
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: var(--cor-primaria);
+    margin-bottom: 8px;
+}
+
+.campo input, .campo-total select {
+    padding: 12px;
+    border: 1px solid #D1D8DD;
+    border-radius: 6px;
+    font-size: 1rem;
+    color: var(--cor-texto);
+    background-color: #FDFCFB;
+}
+
+.campo-total { margin-bottom: 25px; }
+
+.resumo-preco {
+    text-align: center;
+    margin-bottom: 25px;
+    padding-top: 20px;
+    border-top: 1px solid #D1D8DD;
+}
+
+.resumo-preco p {
+    color: var(--cor-texto);
+    font-size: 0.95rem;
+    margin-bottom: 5px;
+    opacity: 0.8;
+}
+
+.resumo-preco h3 {
+    color: var(--cor-primaria);
+    font-size: 2.2rem;
+}
+
+.btn-acao-principal {
+    background-color: var(--cor-secundaria);
+    color: var(--cor-branco);
+    border: none;
+    padding: 16px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+    margin-bottom: 15px;
+}
+
+.btn-acao-principal:hover { 
+    background-color: var(--cor-secundaria-hover); 
+    transform: translateY(-2px);
+}
+
+.aviso-seguranca {
+    text-align: center;
+    font-size: 0.85rem;
+    /* Hexadecimal #008A52 escolhido especificamente para atingir o contraste WCAG AA necessário sobre o fundo claro, garantindo a acessibilidade da leitura */
+    color: #008A52; 
+    font-weight: bold;
+}
+
+@media (max-width: 768px) {
+    .header { flex-direction: column; gap: 15px; }
+    
+    .conteudo-duplo { flex-direction: column; }
+    
+    .info-acomodacao, .modulo-reserva { padding: 24px; }
+    
+    .modulo-reserva {
+        position: static;
+        width: 100%;
+        margin-top: 20px;
+    }
+    
+    .lista-comodidades { grid-template-columns: 1fr; }
+    
+    .img-placeholder-gigante { height: 250px; }
+}

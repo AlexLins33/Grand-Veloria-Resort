@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grand Veloria - Recuperar Senha</title>
+    <link rel="stylesheet" href="../CSS/style.css">
+    <link rel="stylesheet" href="../CSS/login.css">
+</head>
+<body class="body-login">
+
+    <header class="header-login">
+        <a href="index.html" class="logo-login">
+            <h2>GRAND VELORIA</h2>
+        </a>
+    </header>
+
+    <main class="container-login">
+        <div class="card-login">
+            <h1>Redefinir Senha</h1>
+            <p>Insira seu e-mail cadastrado e a nova senha desejada.</p>
+
+            <form id="formRecuperacao" class="form-login">
+                <div class="campo-input">
+                    <label for="emailRecuperacao">E-mail</label>
+                    <input type="email" id="emailRecuperacao" placeholder="seu@email.com" required>
+                </div>
+
+                <div class="campo-input">
+                    <label for="novaSenha">Nova Senha</label>
+                    <input type="password" id="novaSenha" placeholder="Mínimo 6 caracteres" required minlength="6">
+                </div>
+
+                <div class="campo-input">
+                    <label for="confirmaSenha">Confirmar Nova Senha</label>
+                    <input type="password" id="confirmaSenha" placeholder="Repita a nova senha" required minlength="6">
+                </div>
+
+                <button type="submit" class="btn-acao-principal">ATUALIZAR SENHA</button>
+            </form>
+            
+            <div class="separador">
+                <span>ou</span>
+            </div>
+            
+            <p class="texto-cadastro"><a href="login.html">Voltar para o Login</a></p>
+        </div>
+    </main>
+
+    <script>
+        document.getElementById('formRecuperacao').addEventListener('submit', async (evento) => {
+            evento.preventDefault();
+            
+            const email = document.getElementById('emailRecuperacao').value;
+            const novaSenha = document.getElementById('novaSenha').value;
+            const confirmaSenha = document.getElementById('confirmaSenha').value;
+
+            // Abordagem Fail-Fast no client-side: valida a correspondência de strings no navegador para interceptar erros sem gerar processamento ou tráfego inútil contra o servidor
+            if (novaSenha !== confirmaSenha) {
+                alert('❌ As senhas não coincidem. Tente novamente.');
+                return;
+            }
+
+            const botao = evento.target.querySelector('button');
+            const textoOriginal = botao.textContent;
+            botao.textContent = "Atualizando...";
+
+            try {
+                const resposta = await fetch('http://localhost:5000/api/recuperar-senha', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: email, senha: novaSenha })
+                });
+
+                const dados = await resposta.json();
+
+                if (dados.sucesso) {
+                    alert('✅ ' + dados.mensagem);
+                    window.location.href = 'login.html'; 
+                } else {
+                    alert('❌ ' + dados.mensagem); 
+                }
+            } catch (erro) {
+                alert('Erro de conexão com o servidor.');
+            } finally {
+                botao.textContent = textoOriginal;
+            }
+        });
+    </script>
+</body>
+</html>

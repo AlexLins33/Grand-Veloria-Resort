@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grand Veloria - Acesso</title>
+    <!-- Importação em cascata: style.css carrega o design token root e login.css aplica o escopo específico da view -->
+    <link rel="stylesheet" href="../CSS/style.css"> 
+    <link rel="stylesheet" href="../CSS/login.css"> 
+</head>
+<body class="body-login">
+
+    <header class="header-login">
+        <a href="index.html" class="logo-login">
+            <svg width="30" height="30" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="50" cy="35" r="18" fill="var(--cor-secundaria)" />
+                <path d="M 10 65 Q 30 45 50 65 T 90 65" fill="none" stroke="var(--cor-primaria)" stroke-width="8" stroke-linecap="round"/>
+                <path d="M 10 85 Q 30 65 50 85 T 90 85" fill="none" stroke="var(--cor-primaria)" stroke-width="8" stroke-linecap="round"/>
+            </svg>
+            <h2>GRAND VELORIA</h2>
+        </a>
+    </header>
+
+    <main class="container-login">
+        <div class="card-login">
+            <h1>Bem-vindo de volta</h1>
+            <p>Acesse sua conta para gerenciar reservas</p>
+
+            <form id="form-login" class="form-login">
+                <div class="campo-input">
+                    <label for="email">E-mail</label>
+                    <!-- Atributos required aplicam validação client-side via HTML5, poupando a API de requisições malformadas -->
+                    <input type="email" id="email" placeholder="seu@email.com" required>
+                </div>
+
+                <!-- Position relative estabelece o contexto de empilhamento restrito para o botão absolute (mostrar senha) -->
+                <div class="campo-input input-icone">
+                    <label for="senha">Senha</label>
+                    <div style="position: relative;">
+                        <input type="password" id="senha" placeholder="••••••••" required>
+                        <button type="button" id="btnMostrarSenha" class="btn-mostrar">👁️</button>
+                    </div>
+                </div>
+
+                <div class="opcoes-login">
+                    <label class="lembrar-mim">
+                        <input type="checkbox" id="lembrarMim"> Lembrar de mim
+                    </label>
+                    <a href="esqueceu.html" class="link-esqueceu">Esqueceu a senha?</a>
+                </div>
+
+                <button type="submit" class="btn-acao-principal">ENTRAR</button>
+            </form>
+
+            <div class="separador">
+                <span>ou</span>
+            </div>
+
+            <button class="btn-social">Continuar com o Google</button>
+            
+            <p class="texto-cadastro">Ainda não tem conta? <a href="cadastramento.html">Cadastre-se</a></p>
+        </div>
+    </main>
+
+    <!-- Resolução de microinterações visuais isolada no DOM para não sobrecarregar o arquivo de integrações da API -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            const btnMostrar = document.getElementById('btnMostrarSenha');
+            const inputSenha = document.getElementById('senha');
+
+            btnMostrar.addEventListener('click', () => {
+                if (inputSenha.type === 'password') {
+                    inputSenha.type = 'text';
+                    btnMostrar.textContent = '👁️‍🗨️'; 
+                } else {
+                    inputSenha.type = 'password';
+                    btnMostrar.textContent = '👁️';
+                }
+            });
+
+            const inputEmail = document.getElementById('email');
+            const checkLembrar = document.getElementById('lembrarMim');
+            const emailSalvo = localStorage.getItem('emailLembrado');
+
+            if (emailSalvo) {
+                inputEmail.value = emailSalvo;
+                checkLembrar.checked = true;
+            }
+
+            document.getElementById('form-login').addEventListener('submit', () => {
+                if (checkLembrar.checked) {
+                    localStorage.setItem('emailLembrado', inputEmail.value);
+                } else {
+                    localStorage.removeItem('emailLembrado');
+                }
+            });
+
+            document.querySelector('.link-esqueceu').addEventListener('click', (evento) => {
+                // preventDefault bloqueia o jump-to-top padrão das tags âncoras sem destino definido
+                evento.preventDefault(); 
+                const emailRecuperacao = prompt('Digite o seu e-mail para enviarmos o link de recuperação:');
+                
+                if (emailRecuperacao && emailRecuperacao.includes('@')) {
+                    alert(`Um e-mail com as instruções de redefinição foi enviado para: ${emailRecuperacao}\n(Nota: Isso é uma simulação do sistema).`);
+                } else if (emailRecuperacao) {
+                    alert('Por favor, digite um e-mail válido.');
+                }
+            });
+
+        });
+    </script>
+    
+    <script>
+        document.getElementById('form-login').addEventListener('submit', async (evento) => {
+            evento.preventDefault(); 
+
+            const email = document.getElementById('email').value;
+            const senha = document.getElementById('senha').value;
+            
+            const botao = evento.target.querySelector('button');
+            const textoOriginal = botao.textContent;
+            
+            // Alteração de estado (Loading) mitiga dupla submissão de payloads na API
+            botao.textContent = "Aguarde...";
+
+            try {
+                const resposta = await fetch('http://localhost:5000/api/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email: email, senha: senha })
+                });
+
+                const dados = await resposta.json();
+
+                if (dados.sucesso) {
+                    // Armazenamento em localStorage atua como persistência de sessão JWT em ambientes estáticos
+                    localStorage.setItem('usuarioLogado', JSON.stringify(dados.usuario));
+                    
+                    alert('✅ ' + dados.mensagem + '! Bem-vindo(a), ' + dados.usuario.nome);
+                    window.location.href = 'index.html'; 
+                } else {
+                    alert('❌ Erro: ' + dados.mensagem);
+                }
+            } catch (erro) {
+                alert('Erro de conexão com o servidor. Verifique se o backend está rodando.');
+                console.error(erro);
+            } finally {
+                botao.textContent = textoOriginal; 
+            }
+        });
+    </script>
+    <script src="../js/script.js"></script>
+</body>
+</html>

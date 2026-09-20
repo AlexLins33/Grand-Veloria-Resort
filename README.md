@@ -11,7 +11,7 @@ Projeto acadêmico Full Stack focado no desenvolvimento de um sistema web para g
 ## 🎥 Demonstração Visual
 
 *(Substitua o link abaixo pelo caminho do seu GIF/Vídeo demonstrando o cadastro, login e checkout)*
-![Demonstração do Fluxo de Reserva e Login](link_para_seu_gif_aqui.gif)
+![Demonstração do Fluxo de Reserva e Login]((https://github.com/user-attachments/assets/0a09811b-7aa9-4896-bf6b-600e2057159c))
 
 ---
 
